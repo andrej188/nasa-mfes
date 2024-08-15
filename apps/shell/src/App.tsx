@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, createContext, useContext} from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import homeWrapper from "home/homeWrapper";
@@ -14,7 +14,7 @@ const Home = () => {
   }, []);
 
   return (
-      <div ref={divRef}></div>
+    <div ref={divRef}></div>
   );
 };
 
@@ -24,11 +24,8 @@ const List = () => {
   useEffect(() => {
     listWrapper(divRef.current);
   }, []);
-
   return (
-    <div>
-      <div ref={divRef}></div>
-    </div>
+    <div ref={divRef}></div>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './index.scss'
 
 // Define TypeScript interfaces for the data structure
 interface Tag {
@@ -57,7 +58,7 @@ export default () => {
   }
 
   if (!homepage) {
-    return <p className="text-center text-red-500">Loading...</p>;
+    return <p className="text-center text-gray-500">Loading...</p>;
   }
 
   const homepageDescription = homepage.fields.heroDescription.content[0].content[0].value;
@@ -65,17 +66,17 @@ export default () => {
   return (
     <div>
       <div 
-      // className="flex flex-col items-center p-4 space-y-6"
+      className="flex flex-col items-center p-4 space-y-6"
       >
         {homepage.fields.heroImg && (
           <img
             src={homepage.fields.heroImg}
             alt="hero-image"
-            // className="w-full h-48 md:h-60 lg:h-80 object-cover bg-center bg-no-repeat"
+            className="w-full h-48 md:h-60 lg:h-80 object-cover bg-center bg-no-repeat"
           />
         )}
         {homepage.fields.heroDescription && (
-          <p className="text-center text-lg text-gray-700 break-words">{homepageDescription}</p>
+          <p className="text-center text-lg text-grey-700 break-words">{homepageDescription}</p>
         )}
       </div>
     </div>

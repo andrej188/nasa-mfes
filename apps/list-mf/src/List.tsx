@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PaginationComponent from './components/pagination';
-
+import "./index.scss";
 interface Post {
   sys: {
     id: string;
@@ -45,7 +45,6 @@ export default () => {
     const endIndex = startIndex + pageSize;
     const filteredPosts = fetchedPosts.slice(startIndex, endIndex);
     setPosts(filteredPosts);
-    // Assume totalPages calculation is based on fetchedPosts
     setTotalPages(Math.ceil(fetchedPosts.length / pageSize));
   };
 
