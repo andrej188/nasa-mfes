@@ -64,12 +64,14 @@ export default () => {
 
   return (
     <div>
-      <div className="flex flex-col items-center p-4 space-y-6">
+      <div 
+      // className="flex flex-col items-center p-4 space-y-6"
+      >
         {homepage.fields.heroImg && (
           <img
             src={homepage.fields.heroImg}
             alt="hero-image"
-            className="w-full h-48 md:h-60 lg:h-80 object-cover bg-center bg-no-repeat"
+            // className="w-full h-48 md:h-60 lg:h-80 object-cover bg-center bg-no-repeat"
           />
         )}
         {homepage.fields.heroDescription && (

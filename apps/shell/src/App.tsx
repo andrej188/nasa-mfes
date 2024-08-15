@@ -1,26 +1,58 @@
-import React, { useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.scss'; 
-import homeWrapper from 'home/homeWrapper'; 
+import React, { useRef, useEffect } from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import homeWrapper from "home/homeWrapper";
+import listWrapper from "list/listWrapper";
 
-const App = () => {
+import "./index.scss";
+
+const Home = () => {
   const divRef = useRef(null);
 
   useEffect(() => {
-    if (divRef.current) {
-      homeWrapper(divRef.current);
-    }
+    homeWrapper(divRef.current);
   }, []);
 
   return (
-    <div className="mt-10 text-3xl mx-auto max-w-6xl">
+      <div ref={divRef}></div>
+  );
+};
+
+const List = () => {
+  const divRef = useRef(null);
+
+  useEffect(() => {
+    listWrapper(divRef.current);
+  }, []);
+
+  return (
+    <div>
       <div ref={divRef}></div>
     </div>
   );
 };
 
-const rootElement = document.getElementById('app');
-if (!rootElement) throw new Error('Failed to find the root element');
+const App = () => {
+  return (
+    <Router>
+      <div>
+        <nav className="mb-4">
+          <ul className="flex space-x-4">
+            <li>
+              <Link to="/" className="text-blue-500 hover:underline">Home</Link>
+            </li>
+            <li>
+              <Link to="/list" className="text-blue-500 hover:underline">List</Link>
+            </li>
+          </ul>
+        </nav>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/list" element={<List />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+};
 
-const root = ReactDOM.createRoot(rootElement);
-root.render(<App />);
+ReactDOM.render(<App />, document.getElementById("app"));
