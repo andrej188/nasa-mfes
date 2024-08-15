@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './index.scss'
 
-// Define TypeScript interfaces for the data structure
 interface Tag {
   sys: {
     id: string;
@@ -72,8 +71,8 @@ export default () => {
           <img
             src={homepage.fields.heroImg}
             alt="hero-image"
-            className="w-full h-48 md:h-60 lg:h-80 object-cover bg-center bg-no-repeat"
-          />
+            className="w-full h-[35vh] md:h-[50vh] lg:h-[60vh] object-cover"
+            />
         )}
         {homepage.fields.heroDescription && (
           <p className="text-center text-lg text-grey-700 break-words">{homepageDescription}</p>

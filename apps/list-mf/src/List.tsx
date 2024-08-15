@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PaginationComponent from './components/pagination';
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import "./index.scss";
+import detailsWrapper from "details/detailsWrapper";
 interface Post {
   sys: {
     id: string;
@@ -29,7 +31,7 @@ const fetchPosts = async () => {
     return posts;
   } catch (error) {
     console.error('Failed to fetch posts:', error);
-    return []; 
+    return [];
   }
 };
 
@@ -56,6 +58,16 @@ export default () => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
     }
+  };
+  const Details = (params: any) => {
+    const divRef = useRef(null);
+
+    useEffect(() => {
+      detailsWrapper(divRef.current, params);
+    }, [params]);
+    return (
+      <div ref={divRef}></div>
+    );
   };
 
   return (
@@ -89,12 +101,26 @@ export default () => {
               ) : (
                 <p className="text-gray-600 mb-4">Date not available</p>
               )}
-              <a
-                href={`/detail/${post.sys.id}`}
-                className="text-blue-500 hover:text-blue-700 font-medium"
-              >
-                Details
-              </a>
+              {post.sys.id &&
+                // className="text-blue-500 hover:text-blue-700 font-medium"
+                <Router>
+                  <div>
+                    <nav>
+                      <ul>
+                        <li>
+                          <Link to={`/details/${post.sys.id}`} className="text-blue-500 hover:text-blue-700 font-medium">Details</Link>
+                        </li>
+                      </ul>
+                    </nav>
+
+                    <div className="flex-1 overflow-hidden p-4">
+                      <Routes>
+                        <Route path="/details/:id" element={<Details params={post.sys.id} />} />
+                      </Routes>
+                    </div>
+                  </div>
+                </Router>
+              }
             </div>
           ))
         ) : (

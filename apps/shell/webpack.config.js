@@ -66,8 +66,8 @@ module.exports = (_, argv) => ({
       filename: "remoteEntry.js",
       remotes: {
         home: "home_mf@http://localhost:3001/remoteEntry.js",
-        list: "list_mf@http://localhost:3002/remoteEntry.js"
-
+        list: "list_mf@http://localhost:3002/remoteEntry.js",
+        details: "details_mf@http://localhost:3002/remoteEntry.js"
       },
       exposes: {
       },

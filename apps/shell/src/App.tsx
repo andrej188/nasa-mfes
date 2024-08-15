@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, createContext, useContext} from "react";
+import React, { useRef, useEffect} from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import homeWrapper from "home/homeWrapper";
@@ -31,25 +31,29 @@ const List = () => {
 
 const App = () => {
   return (
-    <Router>
-      <div>
-        <nav className="mb-4">
-          <ul className="flex space-x-4">
-            <li>
-              <Link to="/" className="text-blue-500 hover:underline">Home</Link>
-            </li>
-            <li>
-              <Link to="/list" className="text-blue-500 hover:underline">List</Link>
-            </li>
-          </ul>
-        </nav>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/list" element={<List />} />
-        </Routes>
-      </div>
-    </Router>
+      <Router>
+        <div className="flex flex-col h-screen">
+          <nav className="bg-gray-100 border-b border-gray-300 p-4">
+            <ul className="flex list-none p-0 m-0 space-x-4 text-xl">
+              <li>
+                <Link to="/" className="text-blue-500 hover:text-blue-700">Home</Link>
+              </li>
+              <li>
+                <Link to="/list" className="text-blue-500 hover:text-blue-700">List</Link>
+              </li>
+            </ul>
+          </nav>
+  
+          <div className="flex-1 overflow-hidden p-4">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/list" element={<List />} />
+            </Routes>
+          </div>
+        </div>
+      </Router>
   );
+
 };
 
 ReactDOM.render(<App />, document.getElementById("app"));
