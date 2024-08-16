@@ -22,7 +22,7 @@ interface Post {
   fields: PostFields;
 }
 
-export default ({ params }: { params: { id: string } }) => {
+export default ({ params }: { params: { params: string } }) => {
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -44,7 +44,7 @@ export default ({ params }: { params: { id: string } }) => {
           throw new Error('Unexpected response structure');
         }
 
-        const post = data.find((item: any) => item.sys.id === params.id);
+        const post = data.find((item: any) => item.sys.id === params.params);
 
         if (!post) {
           throw new Error('Post not found');
@@ -59,7 +59,7 @@ export default ({ params }: { params: { id: string } }) => {
     };
 
     fetchPost();
-  }, [params.id]);
+  }, [params.params]);
 
   if (loading) return <p className="text-center text-gray-500">Loading...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
