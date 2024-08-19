@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import homeWrapper from "home/homeWrapper";
 import listWrapper from "list/listWrapper";
+import detailsWrapper from "details/detailsWrapper";
 
 import "./index.scss";
 
@@ -29,6 +30,18 @@ const List = () => {
   );
 };
 
+const Details = () => {
+  const divRef = useRef(null);
+
+  useEffect(() => {
+    detailsWrapper(divRef.current);
+  }, []);
+  return (
+    <div ref={divRef}></div>
+  );
+};
+
+
 const App = () => {
   return (
       <Router>
@@ -48,6 +61,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/list" element={<List />} />
+              {/* <Route path="/details" element={<Details />} /> */}
             </Routes>
           </div>
         </div>

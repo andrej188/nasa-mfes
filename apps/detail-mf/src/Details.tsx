@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import './index.scss';
 interface RoverReferenceFields {
   name?: string;
   status?: string;
@@ -26,7 +26,6 @@ export default ({ params }: { params: { params: string } }) => {
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -44,7 +43,7 @@ export default ({ params }: { params: { params: string } }) => {
           throw new Error('Unexpected response structure');
         }
 
-        const post = data.find((item: any) => item.sys.id === params.params);
+        const post = data.find((item: any) => item.sys.id === params.sys.id);
 
         if (!post) {
           throw new Error('Post not found');

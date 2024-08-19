@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, useParams } from 'react-router-dom';
 import PaginationComponent from './components/pagination';
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import "./index.scss";
-import detailsWrapper from "details/detailsWrapper";
+import './index.scss';
+import detailsWrapper from 'details/detailsWrapper';
+
 interface Post {
   sys: {
     id: string;
@@ -14,19 +15,19 @@ interface Post {
       fields: {
         name: string;
         maxDate: string;
-      }
-    }
+      };
+    };
   };
 }
 
 const fetchPosts = async () => {
   try {
     const res = await fetch('https://content-service-three.vercel.app/api/content', {
-      cache: 'no-store'
+      cache: 'no-store',
     });
     const data = await res.json();
     const posts = data.filter((type: any) =>
-      type.metadata.tags.some((tag: any) => tag.sys.id === "posts")
+      type.metadata.tags.some((tag: any) => tag.sys.id === 'posts')
     );
     return posts;
   } catch (error) {
@@ -35,7 +36,38 @@ const fetchPosts = async () => {
   }
 };
 
-export default () => {
+const Details: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [details, setDetails] = useState<Post | null>(null);
+  const divRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const res = await fetch(`https://content-service-three.vercel.app/api/content/`);
+        const data = await res.json();
+        const filteredDetails = data.find((post: any) => post.sys.id === id);
+        setDetails(filteredDetails);
+      } catch (error) {
+        console.error('Failed to fetch details:', error);
+      }
+    };
+
+    fetchDetails();
+  }, [id]);
+
+  useEffect(() => {
+    if (divRef.current && details) {
+      detailsWrapper(divRef.current, details);
+    }
+  }, [details]);
+
+  if (!details) return <p>Loading...</p>;
+
+  return <div ref={divRef}></div>;
+};
+
+const PostList: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -59,19 +91,9 @@ export default () => {
       setCurrentPage(page);
     }
   };
-  const Details = (params: any) => {
-    const divRef = useRef(null);
-
-    useEffect(() => {
-      detailsWrapper(divRef.current, params);
-    }, [params]);
-    return (
-      <div ref={divRef}></div>
-    );
-  };
 
   return (
-    <React.Fragment>
+    <div>
       <h1 className="text-center text-3xl md:text-2xl lg:text-2xl font-bold mb-6">
         Curiosity Rover Images
       </h1>
@@ -95,32 +117,18 @@ export default () => {
                 {post.fields.roverReference.fields.name || 'Unknown Rover'}
               </h2>
               {post.fields.earthDate ? (
-                <p className="text-gray-600 mb-4">
-                  {post.fields.earthDate}
-                </p>
+                <p className="text-gray-600 mb-4">{post.fields.earthDate}</p>
               ) : (
                 <p className="text-gray-600 mb-4">Date not available</p>
               )}
-              {post.sys.id &&
-                // className="text-blue-500 hover:text-blue-700 font-medium"
-                <Router>
-                  <div>
-                    <nav>
-                      <ul>
-                        <li>
-                          <Link to={`/details/${post.sys.id}`} className="text-blue-500 hover:text-blue-700 font-medium">Details</Link>
-                        </li>
-                      </ul>
-                    </nav>
-
-                    <div className="flex-1 overflow-hidden p-4">
-                      <Routes>
-                        <Route path="/details/:id" element={<Details params={post.sys.id} />} />
-                      </Routes>
-                    </div>
-                  </div>
-                </Router>
-              }
+              {post.sys.id && (
+                <Link
+                  to={`/details/${post.sys.id}`}
+                  className="text-blue-500 hover:text-blue-700 font-medium"
+                >
+                  Details
+                </Link>
+              )}
             </div>
           ))
         ) : (
@@ -132,7 +140,21 @@ export default () => {
         totalPages={totalPages}
         onPageChange={handlePageChange}
       />
-    </React.Fragment>
+    </div>
   );
 };
 
+const App: React.FC = () => {
+  return (
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/list" element={<PostList />} />
+          <Route path="/details/:id" element={<Details />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+};
+
+export default App;
