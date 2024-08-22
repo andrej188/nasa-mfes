@@ -37,6 +37,7 @@ export default () => {
       try {
         const res = await axios.get<Homepage[]>('https://content-service-three.vercel.app/api/content');
         const content = res.data;
+        console.log(content)
 
         const homepageData = content.find((type: { metadata: { tags: { sys: { id: string; }; }[]; }; }) =>
           type.metadata.tags.some((tag: { sys: { id: string; }; }) => tag.sys.id === 'homepage')

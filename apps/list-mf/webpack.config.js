@@ -9,7 +9,9 @@ const printCompilationMessage = require('./compilation.config.js');
 
 module.exports = (_, argv) => ({
   output: {
-    publicPath: "http://localhost:3002/",
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js',                
+    publicPath: "auto",
   },
 
   resolve: {

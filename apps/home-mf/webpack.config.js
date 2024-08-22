@@ -9,7 +9,9 @@ const printCompilationMessage = require('./compilation.config.js');
 
 module.exports = (_, argv) => ({
   output: {
-    publicPath: "http://localhost:3001/",
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js',                
+    publicPath: "auto",
   },
 
   resolve: {
@@ -64,8 +66,7 @@ module.exports = (_, argv) => ({
     new ModuleFederationPlugin({
       name: "home_mf",
       filename: "remoteEntry.js",
-      remotes: {
-      },
+      remotes: {},
       exposes: {
         "./Home" : "./src/App.tsx",
         "./homeWrapper" : "./src/homeWrapper.tsx"
