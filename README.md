@@ -18,7 +18,7 @@ pnpm build
 To develop all apps and packages, run the following command:
 
 ```
-cd my-turborepo
+cd nasa-mfes
 npx turbo run start
 ```
 
