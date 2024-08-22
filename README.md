@@ -9,7 +9,7 @@ This is an official starter Turborepo.
 To build all apps and packages, run the following command:
 
 ```
-cd my-turborepo
+cd nasa-mfes
 pnpm build
 ```
 
