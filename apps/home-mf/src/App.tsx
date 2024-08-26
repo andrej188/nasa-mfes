@@ -5,7 +5,7 @@ import './index.scss'
 import Home from './Home'
 
 const App = () => (
-  <div className="mt-10 text-3xl text-red-500 mx-auto max-w-6xl">
+<div className="mt-10 text-3xl text-red-500 mx-auto max-w-6xl">
     <Home />
   </div>
 )

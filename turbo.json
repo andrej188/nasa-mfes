@@ -4,11 +4,11 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "inputs": ["$TURBO_DEFAULT$", ".env.production"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "start": {
-      "dependsOn": ["build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env"],
       "cache": false
     },
     "lint": {
